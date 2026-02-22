@@ -115,7 +115,7 @@
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/nextjs-starter-kit.git
+git clone https://github.com/chndrwali/nextjs-starter-kit.git
 cd nextjs-starter-kit
 npm install
 ```
