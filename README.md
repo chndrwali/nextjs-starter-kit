@@ -1,11 +1,19 @@
 <p align="center">
-  <img src="https://nextjs.org/icons/next.svg" width="80" alt="Next.js Logo" />
+  <a href="https://github.com/chndrwali/nextjs-starter-kit">
+    <img src="./public/next.svg" width="250" alt="Next.js Logo" />
+  </a>
 </p>
 
 <h1 align="center">🚀 Next.js Starter Kit</h1>
 
 <p align="center">
   A production-ready, full-stack Next.js 16 boilerplate with authentication, database, file uploads, and type-safe APIs — all pre-configured so you can skip the setup and start building.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/license/chndrwali/nextjs-starter-kit?style=flat-square&color=6366f1" alt="License" />
+  <img src="https://img.shields.io/github/stars/chndrwali/nextjs-starter-kit?style=flat-square&color=6366f1" alt="Stars" />
+  <img src="https://img.shields.io/github/forks/chndrwali/nextjs-starter-kit?style=flat-square&color=6366f1" alt="Forks" />
 </p>
 
 <p align="center">
