@@ -2,12 +2,15 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, registerSchema } from "@/lib/form-schema";
+import {
+  LoginFormValues,
+  loginSchema,
+  RegisterFormValues,
+  registerSchema,
+} from "@/lib/form-schema";
 import { signIn, signUp } from "@/lib/auth-client";
-import { z } from "zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
 import {
   Form,
   FormControl,
@@ -31,15 +34,9 @@ import Link from "next/link";
 import { Spinner } from "@/components/ui/spinner";
 import { appToast } from "@/components/custom/app-toast";
 
-// ────────────────────────────────────────────
-// Types
-// ────────────────────────────────────────────
 type AuthFormProps = {
   variant: "login" | "register";
 };
-
-type LoginFormValues = z.infer<typeof loginSchema>;
-type RegisterFormValues = z.infer<typeof registerSchema>;
 
 // ────────────────────────────────────────────
 // Config per variant
