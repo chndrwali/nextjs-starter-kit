@@ -7,7 +7,7 @@
 <h1 align="center">🚀 Next.js Starter Kit</h1>
 
 <p align="center">
-  A production-ready, full-stack Next.js 16 boilerplate with authentication, database, file uploads, and type-safe APIs — all pre-configured so you can skip the setup and start building.
+  A production-ready, full-stack Next.js 16 boilerplate with authentication, admin dashboard, database, file uploads, and type-safe APIs — all pre-configured so you can skip the setup and start building.
 </p>
 
 <p align="center">
@@ -22,6 +22,9 @@
   <a href="#getting-started">Getting Started</a> •
   <a href="#project-structure">Project Structure</a> •
   <a href="#environment-variables">Environment Variables</a> •
+  <a href="#customization">Customization</a> •
+  <a href="#deployment">Deployment</a> •
+  <a href="#special-thanks">Special Thanks</a> •
   <a href="#license">License</a>
 </p>
 
@@ -44,6 +47,7 @@
 | **File Uploads**   | [UploadThing](https://uploadthing.com)                                  | 7       |
 | **Form Handling**  | [React Hook Form](https://react-hook-form.com) + [Zod](https://zod.dev) | Latest  |
 | **Charts**         | [Recharts](https://recharts.org)                                        | 2       |
+| **Animations**     | [GSAP](https://gsap.com)                                                | 3       |
 | **Email**          | [Resend](https://resend.com) (pre-configured, commented)                | —       |
 | **Icons**          | [Lucide React](https://lucide.dev)                                      | Latest  |
 | **Fonts**          | Geist Sans & Geist Mono                                                 | —       |
@@ -58,6 +62,7 @@
 - **Secure cookies** — `httpOnly`, `sameSite`, `secure` in production
 - **Session management** — cookie caching, configurable expiry
 - **Password reset** flow (Resend email template included, commented out)
+- **Forgot password** flow with email-based reset link
 - Pre-built client exports: `signIn`, `signUp`, `signOut`, `useSession`, `changePassword`, `resetPassword`, `admin`
 
 ### 🗄️ Database (Prisma + PostgreSQL)
@@ -88,10 +93,11 @@
 
 ### 🎨 UI & UX
 
-- **56+ shadcn/ui components** pre-installed (New York style)
+- **56 shadcn/ui components** pre-installed (New York style)
+- **12 custom components** — password input, image/file upload, toast, alert dialog, theme toggle, user avatar, responsive modal, page container, icons, heading, login account info
 - **Tailwind CSS v4** with CSS variables and `tw-animate-css`
 - **React Compiler** enabled for automatic memoization
-- **next-themes** for dark/light mode support
+- **next-themes** for dark/light mode support (dark by default)
 - **Sonner** for toast notifications
 - **Embla Carousel** for carousels
 - **Vaul** for drawer components
@@ -101,13 +107,35 @@
 - **cmdk** for command palette
 - **input-otp** for OTP inputs
 - **CVA + clsx + tailwind-merge** for class utilities
+- **GSAP** animated 404 page with glitch effect, floating particles, and scanline animation
+
+### 📱 Admin Dashboard
+
+- **Collapsible sidebar** navigation with icon-based and expanded modes
+- **RBAC-based navigation** filtering — show/hide items based on `role`, `permission`, `plan`, `feature`, or `requireOrg`
+- **Breadcrumbs** with auto-generated items based on the current route
+- **Search (Cmd+K)** command palette for quick navigation
+- **Notification dropdown** component
+- **Sign-out button** with confirmation dialog
+- **User avatar profile** with role badge
+- Pre-configured nav items: Dashboard, Inbox, Workspaces (Portfolio, Resume), Tracker
 
 ### 🛠️ Custom Hooks
 
 - `useCurrentUser()` — reactive current user state (client)
 - `getSession()` — server-side session retrieval
+- `useFilteredNavItems()` — RBAC-based navigation filtering (client-side, no server calls)
+- `useBreadcrumbs()` — dynamic breadcrumb generation from URL segments
 - `useDebounce()` — debounce values
 - `useMobile()` — responsive breakpoint detection
+
+### 🔒 Auth Pages
+
+- **Login** — email/password with "Remember me" and "Forgot password" link, includes demo account info
+- **Register** — email/password/name with password strength indicator and rules
+- **Forgot Password** — email-based reset link request
+- **Reset Password** — set new password from email link
+- Beautiful auth layout with animated gradient background
 
 ---
 
@@ -196,48 +224,81 @@ Open [http://localhost:3000](http://localhost:3000) to see your app.
 ```
 .
 ├── app/
-│   ├── (auth)/              # Auth route group (login, register)
-│   │   ├── login/
-│   │   ├── register/
-│   │   └── layout.tsx
+│   ├── (admin)/              # Admin dashboard route group
+│   │   ├── admin/            # Admin pages (dashboard, inbox, etc.)
+│   │   └── layout.tsx        # Admin layout with session guard
+│   ├── (auth)/               # Auth route group
+│   │   ├── login/            # Login page with demo account info
+│   │   ├── register/         # Registration page
+│   │   ├── forgot-password/  # Forgot password page
+│   │   ├── reset-password/   # Reset password page
+│   │   └── layout.tsx        # Auth layout with redirect if logged in
+│   ├── (public)/             # Public route group
+│   │   └── page.tsx          # Home page (redirects to /login)
 │   ├── api/
-│   │   ├── auth/[...all]/   # Better Auth catch-all handler
-│   │   ├── trpc/[trpc]/     # tRPC API handler
-│   │   └── uploadthing/     # UploadThing route handler + file router
-│   ├── generated/prisma/    # Prisma generated client (git-ignored)
-│   ├── globals.css          # Tailwind CSS + design tokens
-│   ├── layout.tsx           # Root layout (Geist fonts)
-│   └── page.tsx             # Home page
+│   │   ├── auth/[...all]/    # Better Auth catch-all handler
+│   │   ├── trpc/[trpc]/      # tRPC API handler
+│   │   └── uploadthing/      # UploadThing route handler + file router
+│   ├── generated/prisma/     # Prisma generated client (git-ignored)
+│   ├── globals.css           # Tailwind CSS + design tokens
+│   ├── layout.tsx            # Root layout (Geist fonts, providers)
+│   └── not-found.tsx         # Animated 404 page (GSAP)
 ├── components/
-│   ├── ui/                  # 56+ shadcn/ui components
-│   └── uploadthing.ts       # UploadThing component exports
+│   ├── custom/               # 12 custom reusable components
+│   │   ├── alert-dialog-custom.tsx
+│   │   ├── app-toast.tsx
+│   │   ├── file-upload.tsx
+│   │   ├── heading.tsx
+│   │   ├── icons.tsx
+│   │   ├── image-upload.tsx
+│   │   ├── login-account-info.tsx
+│   │   ├── page-container.tsx
+│   │   ├── password-input.tsx
+│   │   ├── responsive-modal.tsx
+│   │   ├── theme-mode-toggle.tsx
+│   │   └── user-avatar-profile.tsx
+│   ├── ui/                   # 56 shadcn/ui components
+│   ├── theme-provider.tsx    # next-themes provider
+│   └── uploadthing.ts        # UploadThing component exports
 ├── hooks/
-│   ├── get-session.ts       # Server-side session helper
-│   ├── use-current-user.ts  # Client-side current user hook
-│   ├── use-debounce.ts      # Debounce hook
-│   └── use-mobile.ts        # Mobile breakpoint hook
+│   ├── get-session.ts        # Server-side session helper
+│   ├── use-breadcrumbs.ts    # Dynamic breadcrumb hook
+│   ├── use-current-user.ts   # Client-side current user hook
+│   ├── use-debounce.ts       # Debounce hook
+│   ├── use-mobile.ts         # Mobile breakpoint hook
+│   └── use-nav.ts            # RBAC-based nav filtering hook
 ├── lib/
-│   ├── auth.ts              # Better Auth server config
-│   ├── auth-client.ts       # Better Auth client exports
-│   ├── config-env.ts        # Centralized env config
-│   ├── prisma.ts            # Prisma client singleton
-│   └── utils.ts             # Utility functions (cn)
+│   ├── auth.ts               # Better Auth server config
+│   ├── auth-client.ts        # Better Auth client exports
+│   ├── config-env.ts         # Centralized env config
+│   ├── form-schema.ts        # Zod schemas (login, register, etc.)
+│   ├── prisma.ts             # Prisma client singleton
+│   └── utils.ts              # Utility functions (cn, formatters)
+├── modules/
+│   ├── admin/ui/
+│   │   ├── components/       # Breadcrumbs, notifications, search, signout
+│   │   ├── config/           # Nav config, search config (RBAC)
+│   │   └── layout/           # Admin layout, app sidebar, header
+│   └── auth/ui/
+│       ├── form/             # Login, register, forgot & reset password forms
+│       └── layout/           # Auth layout (animated gradient bg)
 ├── prisma/
-│   ├── migrations/          # Database migrations
-│   └── schema.prisma        # Prisma schema
+│   ├── migrations/           # Database migrations
+│   └── schema.prisma         # Prisma schema
 ├── trpc/
-│   ├── client.tsx           # tRPC client provider + React Query setup
-│   ├── init.ts              # tRPC procedures (base, protected, admin)
-│   ├── query-client.ts      # TanStack Query client factory
+│   ├── client.tsx            # tRPC client provider + React Query setup
+│   ├── init.ts               # tRPC procedures (base, protected, admin)
+│   ├── query-client.ts       # TanStack Query client factory
 │   ├── routers/
-│   │   └── _app.ts          # Root tRPC router
-│   └── server.tsx           # Server-side tRPC caller + prefetch helpers
-├── .env.example             # Environment variable template
-├── components.json          # shadcn/ui configuration
-├── next.config.ts           # Next.js config (React Compiler enabled)
-├── prisma.config.ts         # Prisma config (datasource URL)
-├── tailwind v4              # (configured via postcss + globals.css)
-└── tsconfig.json            # TypeScript config
+│   │   └── _app.ts           # Root tRPC router
+│   └── server.tsx            # Server-side tRPC caller + prefetch helpers
+├── types/
+│   └── index.ts              # NavItem, PermissionCheck types
+├── .env.example              # Environment variable template
+├── components.json           # shadcn/ui configuration
+├── next.config.ts            # Next.js config (React Compiler enabled)
+├── prisma.config.ts          # Prisma config (datasource URL)
+└── tsconfig.json             # TypeScript config
 ```
 
 ---
@@ -318,6 +379,69 @@ This starter is optimized for deployment on [Vercel](https://vercel.com):
 3. Add all environment variables from `.env.example`
 4. Update `BETTER_AUTH_URL` and `NEXT_PUBLIC_URL` to your production domain
 5. Deploy 🚀
+
+---
+
+## Special Thanks
+
+This project was made possible by the following amazing open-source projects, tools, and resources:
+
+### Core Framework & Libraries
+
+| Library                                  | Description                          |
+| ---------------------------------------- | ------------------------------------ |
+| [Next.js](https://nextjs.org)            | The React framework for the web      |
+| [React](https://react.dev)               | Library for building user interfaces |
+| [TypeScript](https://typescriptlang.org) | Typed JavaScript at any scale        |
+| [Tailwind CSS](https://tailwindcss.com)  | Utility-first CSS framework          |
+| [shadcn/ui](https://ui.shadcn.com)       | Beautiful, accessible UI components  |
+| [Radix UI](https://www.radix-ui.com)     | Unstyled, accessible UI primitives   |
+
+### Backend & Data
+
+| Library                                                   | Description                        |
+| --------------------------------------------------------- | ---------------------------------- |
+| [Better Auth](https://www.better-auth.com)                | Authentication library for Next.js |
+| [Prisma](https://prisma.io)                               | Next-generation ORM for Node.js    |
+| [tRPC](https://trpc.io)                                   | End-to-end type-safe APIs          |
+| [TanStack React Query](https://tanstack.com/query)        | Powerful data synchronization      |
+| [UploadThing](https://uploadthing.com)                    | File uploads made easy             |
+| [Resend](https://resend.com)                              | Modern email sending API           |
+| [Zod](https://zod.dev)                                    | TypeScript-first schema validation |
+| [SuperJSON](https://github.com/flightcontrolhq/superjson) | Serialization for complex types    |
+
+### UI & Animation
+
+| Library                                                                     | Description                           |
+| --------------------------------------------------------------------------- | ------------------------------------- |
+| [GSAP](https://gsap.com)                                                    | Professional-grade animation library  |
+| [Recharts](https://recharts.org)                                            | Composable charting library for React |
+| [Lucide React](https://lucide.dev)                                          | Beautiful & consistent icon toolkit   |
+| [Sonner](https://sonner.emilkowal.dev)                                      | Opinionated toast notifications       |
+| [Embla Carousel](https://www.embla-carousel.com)                            | Lightweight carousel library          |
+| [Vaul](https://vaul.emilkowal.dev)                                          | Drawer component for React            |
+| [cmdk](https://cmdk.paco.me)                                                | Command palette component             |
+| [next-themes](https://github.com/pacocoursey/next-themes)                   | Theme management for Next.js          |
+| [React Hook Form](https://react-hook-form.com)                              | Performant form handling              |
+| [react-day-picker](https://react-day-picker.js.org)                         | Date picker component                 |
+| [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) | Resizable panel layouts               |
+| [input-otp](https://input-otp.rodz.dev)                                     | One-time password input component     |
+
+### Sidebar Inspiration
+
+> The admin sidebar implementation in this project is inspired by and credits go to:
+>
+> 🔗 **[next-shadcn-dashboard-starter](https://github.com/Kiranism/next-shadcn-dashboard-starter)** by [Kiranism](https://github.com/Kiranism)
+>
+> A beautifully crafted admin dashboard starter with shadcn/ui and Next.js.
+
+### Useful Tools & Resources
+
+| Resource                                    | Description                                                     |
+| ------------------------------------------- | --------------------------------------------------------------- |
+| [favicon.io](https://favicon.io/)           | Generate favicons from text, image, or emoji                    |
+| [tweakcn](https://tweakcn.com/editor/theme) | Visual theme editor for shadcn/ui — customize colors and styles |
+| [Aceternity UI](https://ui.aceternity.com/) | Beautiful animated components for React & Tailwind CSS          |
 
 ---
 
