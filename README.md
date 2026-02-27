@@ -1,10 +1,4 @@
-<p align="center">
-  <a href="https://github.com/chndrwali/nextjs-starter-kit">
-    <img src="./public/next.svg" width="250" alt="Next.js Logo" />
-  </a>
-</p>
-
-<h1 align="center">🚀 Next.js Starter Kit</h1>
+<h1 align="center">🚀 Next.js Starter Kit T3 Stack + shadcn/ui</h1>
 
 <p align="center">
   A production-ready, full-stack Next.js 16 boilerplate with authentication, admin dashboard, database, file uploads, and type-safe APIs — all pre-configured so you can skip the setup and start building.
@@ -14,6 +8,11 @@
   <img src="https://img.shields.io/github/license/chndrwali/nextjs-starter-kit?style=flat-square&color=6366f1" alt="License" />
   <img src="https://img.shields.io/github/stars/chndrwali/nextjs-starter-kit?style=flat-square&color=6366f1" alt="Stars" />
   <img src="https://img.shields.io/github/forks/chndrwali/nextjs-starter-kit?style=flat-square&color=6366f1" alt="Forks" />
+</p>
+
+<p align="center">
+  <a href="PRD.md">📋 PRD Prompt Template</a> •
+  <a href="PRD-EXAMPLE.md">📄 PRD Example</a>
 </p>
 
 <p align="center">
@@ -535,10 +534,29 @@ Starter kit ini menyertakan file **[`PRD.md`](PRD.md)** yang berisi prompt templ
 
 > 💡 **Tip**: Semakin detail input yang kamu berikan, semakin akurat dan actionable PRD yang dihasilkan.
 
+📄 **Contoh hasil PRD**: Lihat [`PRD-EXAMPLE.md`](PRD-EXAMPLE.md) untuk contoh PRD yang sudah di-generate menggunakan prompt template ini.
+
 ---
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## ☕ Support
+
+If you find this starter kit helpful, consider supporting me:
+
+<p align="center">
+  <a href="https://ko-fi.com/chndrwali">
+    <img src="https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi" />
+  </a>
+  <a href="https://trakteer.id/candra_wali_sanjaya/tip">
+    <img src="https://img.shields.io/badge/Trakteer-Tip%20Me-C02433?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48L3N2Zz4=&logoColor=white" alt="Trakteer" />
+  </a>
+</p>
+
+---
 
 **Created by [Candra Wali Sanjaya](https://github.com/chndrwali)**
