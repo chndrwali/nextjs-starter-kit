@@ -21,10 +21,11 @@
   <a href="#features">Features</a> •
   <a href="#getting-started">Getting Started</a> •
   <a href="#project-structure">Project Structure</a> •
-  <a href="#environment-variables">Environment Variables</a> •
+  <a href="#trpc-usage">tRPC Usage</a> •
   <a href="#customization">Customization</a> •
   <a href="#deployment">Deployment</a> •
   <a href="#special-thanks">Special Thanks</a> •
+  <a href="#prd-generator">PRD Generator</a> •
   <a href="#license">License</a>
 </p>
 
@@ -350,6 +351,73 @@ export type AppRouter = typeof appRouter;
 
 ---
 
+## tRPC Usage
+
+After creating a router, you can use it in client components with the **TanStack React Query** integration.
+
+📖 **Full documentation**: [tRPC + TanStack React Query Usage](https://trpc.io/docs/client/tanstack-react-query/usage)
+
+Example usage in a client component:
+
+```typescript
+"use client";
+
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTRPC } from "@/trpc/client";
+
+export function ExampleComponent() {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
+  // Query
+  const { data, isLoading } = useQuery(
+    trpc.example.hello.queryOptions({ name: "World" })
+  );
+
+  // Mutation
+  const createMutation = useMutation(
+    trpc.example.create.mutationOptions({
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries(trpc.example.hello.queryFilter());
+      },
+    })
+  );
+
+  if (isLoading) return <p>Loading...</p>;
+
+  return (
+    <div>
+      <p>{data?.greeting}</p>
+      <button onClick={() => createMutation.mutate({ title: "New Item" })}>
+        Create
+      </button>
+    </div>
+  );
+}
+```
+
+Example server-side prefetching (SSR) in a server component:
+
+```typescript
+import { trpc, HydrateClient, prefetch } from "@/trpc/server";
+
+export default async function Page() {
+  // Prefetch on server — zero waterfall
+  await prefetch(trpc.example.hello.queryOptions({ name: "World" }));
+
+  return (
+    <HydrateClient>
+      <ExampleComponent />
+    </HydrateClient>
+  );
+}
+```
+
+> 💡 For more details on `useQuery`, `useMutation`, `useSuspenseQuery`, `useInfiniteQuery`, and more, visit the [official tRPC documentation](https://trpc.io/docs/client/tanstack-react-query/usage).
+
+---
+
 ## Customization
 
 ### Enabling Email (Resend)
@@ -442,6 +510,30 @@ This project was made possible by the following amazing open-source projects, to
 | [favicon.io](https://favicon.io/)           | Generate favicons from text, image, or emoji                    |
 | [tweakcn](https://tweakcn.com/editor/theme) | Visual theme editor for shadcn/ui — customize colors and styles |
 | [Aceternity UI](https://ui.aceternity.com/) | Beautiful animated components for React & Tailwind CSS          |
+
+---
+
+## PRD Generator
+
+Starter kit ini menyertakan file **[`PRD.md`](PRD.md)** yang berisi prompt template untuk generate **Product Requirements Document** yang lengkap dan implementation-ready.
+
+### Cara Penggunaan
+
+1. Buka file [`PRD.md`](PRD.md)
+2. Copy seluruh isi file tersebut
+3. Paste ke AI tool favoritmu (ChatGPT, Claude, Gemini, dll.)
+4. Isi bagian **Project Input** dengan detail proyekmu — ganti semua `{{placeholder}}` dengan informasi yang sesuai
+5. AI akan generate PRD lengkap dengan struktur:
+   - Overview, User Personas & Stories
+   - Functional & Non-Functional Requirements (MoSCoW)
+   - Core Features dengan Acceptance Criteria
+   - User Flows (Mermaid flowchart)
+   - System Architecture & Sequence Diagram
+   - Database Schema & ER Diagram
+   - API Design, Tech Stack, Development Phases
+   - Testing Strategy
+
+> 💡 **Tip**: Semakin detail input yang kamu berikan, semakin akurat dan actionable PRD yang dihasilkan.
 
 ---
 
