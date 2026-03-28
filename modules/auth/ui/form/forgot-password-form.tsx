@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { safeZodResolver } from "@/lib/zod";
 import { useState } from "react";
 import { requestPasswordReset } from "@/lib/auth-client";
 import {
@@ -31,6 +30,7 @@ import Link from "next/link";
 import { Spinner } from "@/components/ui/spinner";
 import { appToast } from "@/components/custom/app-toast";
 import { CheckCircle2 } from "lucide-react";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 export const ForgotPasswordForm = () => {
   const [error, setError] = useState<string | undefined>(undefined);
@@ -38,7 +38,7 @@ export const ForgotPasswordForm = () => {
   const [success, setSuccess] = useState(false);
 
   const form = useForm<ForgotPasswordFormValues>({
-    resolver: safeZodResolver(forgotPasswordSchema),
+    resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
       email: "",
     },
