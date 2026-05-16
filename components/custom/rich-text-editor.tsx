@@ -27,7 +27,7 @@ import {
 import { useCallback, useEffect } from "react";
 import { Toggle } from "../ui/toggle";
 
-interface ProductRichTextEditorProps {
+interface RichTextEditorProps {
     value: string;
     onChange: (value: string) => void;
     placeholder?: string;
@@ -117,7 +117,7 @@ export const RichTextEditor = ({
     onChange,
     placeholder = "Tulis deskripsi produk yang menarik...",
     maxChars = 2000,
-}: ProductRichTextEditorProps) => {
+}: RichTextEditorProps) => {
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -135,7 +135,7 @@ export const RichTextEditor = ({
         editorProps: {
             attributes: {
                 class: cn(
-                    "product-editor-content outline-none min-h-[180px] text-sm text-foreground px-4 py-3",
+                    "rich-editor-content outline-none min-h-[180px] text-sm text-foreground px-4 py-3",
                     "prose prose-sm max-w-none dark:prose-invert",
                     "focus:outline-none",
                 ),
