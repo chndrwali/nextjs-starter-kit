@@ -85,10 +85,10 @@
 ### 📁 File Uploads (UploadThing)
 
 - 4 pre-configured file routes:
-  - `productImage` — single image (4MB, auth required)
-  - `productImages` — multiple images up to 5 (4MB each, auth required)
-  - `pdfUploader` — single PDF (4MB, auth required)
-  - `publicImage` — single image (4MB, no auth)
+    - `productImage` — single image (4MB, auth required)
+    - `productImages` — multiple images up to 5 (4MB each, auth required)
+    - `pdfUploader` — single PDF (4MB, auth required)
+    - `publicImage` — single image (4MB, no auth)
 - Ready-to-use components: `UploadButton`, `UploadDropzone`, `useUploadThing`
 
 ### 🎨 UI & UX
@@ -310,27 +310,19 @@ Create a new router in `trpc/routers/`:
 ```typescript
 // trpc/routers/example.ts
 import { z } from "zod/v4";
-import {
-  createTRPCRouter,
-  baseProcedure,
-  protectedProcedure,
-} from "@/trpc/init";
+import { createTRPCRouter, baseProcedure, protectedProcedure } from "@/trpc/init";
 
 export const exampleRouter = createTRPCRouter({
-  // Public query
-  hello: baseProcedure
-    .input(z.object({ name: z.string() }))
-    .query(({ input }) => {
-      return { greeting: `Hello, ${input.name}!` };
+    // Public query
+    hello: baseProcedure.input(z.object({ name: z.string() })).query(({ input }) => {
+        return { greeting: `Hello, ${input.name}!` };
     }),
 
-  // Protected mutation (requires auth)
-  create: protectedProcedure
-    .input(z.object({ title: z.string() }))
-    .mutation(({ ctx, input }) => {
-      // ctx.auth contains the user session
-      console.log("User:", ctx.auth.user.id);
-      return { success: true };
+    // Protected mutation (requires auth)
+    create: protectedProcedure.input(z.object({ title: z.string() })).mutation(({ ctx, input }) => {
+        // ctx.auth contains the user session
+        console.log("User:", ctx.auth.user.id);
+        return { success: true };
     }),
 });
 ```
@@ -342,7 +334,7 @@ import { createTRPCRouter } from "@/trpc/init";
 import { exampleRouter } from "./example";
 
 export const appRouter = createTRPCRouter({
-  example: exampleRouter,
+    example: exampleRouter,
 });
 
 export type AppRouter = typeof appRouter;
@@ -523,14 +515,14 @@ Starter kit ini menyertakan file **[`PRD.md`](PRD.md)** yang berisi prompt templ
 3. Paste ke AI tool favoritmu (ChatGPT, Claude, Gemini, dll.)
 4. Isi bagian **Project Input** dengan detail proyekmu — ganti semua `{{placeholder}}` dengan informasi yang sesuai
 5. AI akan generate PRD lengkap dengan struktur:
-   - Overview, User Personas & Stories
-   - Functional & Non-Functional Requirements (MoSCoW)
-   - Core Features dengan Acceptance Criteria
-   - User Flows (Mermaid flowchart)
-   - System Architecture & Sequence Diagram
-   - Database Schema & ER Diagram
-   - API Design, Tech Stack, Development Phases
-   - Testing Strategy
+    - Overview, User Personas & Stories
+    - Functional & Non-Functional Requirements (MoSCoW)
+    - Core Features dengan Acceptance Criteria
+    - User Flows (Mermaid flowchart)
+    - System Architecture & Sequence Diagram
+    - Database Schema & ER Diagram
+    - API Design, Tech Stack, Development Phases
+    - Testing Strategy
 
 > 💡 **Tip**: Semakin detail input yang kamu berikan, semakin akurat dan actionable PRD yang dihasilkan.
 
