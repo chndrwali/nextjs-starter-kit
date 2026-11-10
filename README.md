@@ -28,6 +28,12 @@
   <a href="#license">License</a>
 </p>
 
+> ## ✨ Next.js Starter Kit PRO — now available
+>
+> Need payments, subscriptions, a landing page kit, email, and AI built in? **Starter Kit PRO** adds Stripe checkout + subscriptions, a full landing page kit (hero, pricing, FAQ, blog, waitlist), SEO kit, Google/GitHub OAuth, Resend email, AI chat with usage limits, and PostHog analytics — on top of everything in this free kit.
+>
+> 👉 **Get PRO for $79 (launch price, regular $99):** https://chandrewali.gumroad.com/l/nfcyhu
+
 ---
 
 ## Tech Stack
